@@ -1,0 +1,36 @@
+# Dependências (reinstalar com yarn)
+node_modules/
+
+# Variáveis de ambiente (não commitar segredos)
+.env
+.env.*
+!.env.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build / compilação TypeScript (se passar a emitir para pasta)
+dist/
+build/
+
+# Testes e cobertura
+coverage/
+
+# Caches de ferramentas
+.cache/
+.eslintcache
+.vite/
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# IDEs
+.idea/
+*.swp
+*.swo
