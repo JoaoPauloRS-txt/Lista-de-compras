@@ -1,3 +1,10 @@
+import { Header } from "../Components/header/header";
+
 export function Home() {
-  return <h1>Listagem</h1>;
+  return (
+    <>
+      <Header />
+      <h1>Listagem</h1>
+    </>
+  );
 }
