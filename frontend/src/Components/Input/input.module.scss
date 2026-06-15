@@ -5,6 +5,8 @@
   gap: 6px;
   .label {
     font-size: 14px;
+    font-weight: 500;
+    margin-top: 10px;
   }
   .inputWrapper {
     position: relative;
@@ -15,20 +17,32 @@
   }
   .icon {
     position: absolute;
-    left: 10px;
     top: 10px;
     align-items: center;
     color: gray;
     text-align: center;
+    cursor: pointer;
+  }
+  .left {
+    left: 10px;
+  }
+  .right {
+    right: 10px;
   }
   .input {
     width: 100%;
     height: 40px;
     padding: 0 12px;
-    padding-left: 36px;
     border: none;
     border-radius: 6px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  }
+  .input[data-has-icon][data-icon-position="left"] {
+    padding-left: 36px;
+  }
+
+  .input[data-has-icon][data-icon-position="right"] {
+    padding-right: 36px;
   }
   .input:focus {
     outline: none;

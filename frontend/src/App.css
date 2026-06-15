@@ -8,8 +8,7 @@
   --color-primary-hover: #1b4332;
   --color-primary-soft: #d8f3dc;
 
-  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-
+  --font-sans: "Poppins", sans-serif;
   --radius-sm: 8px;
   --radius-md: 12px;
   --shadow-sm: 0 1px 3px rgb(26 46 26 / 8%);
