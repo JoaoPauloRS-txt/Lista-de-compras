@@ -6,9 +6,9 @@ const productService = new ProductService();
 export class ProductsController {
   async createProduct(req: Request, res: Response) {
     try {
-      const { name } = req.body;
+      const { name, categoryId } = req.body;
 
-      const product = await productService.create(name);
+      const product = await productService.create(name, categoryId);
 
       return res.status(201).json(product);
     } catch (error) {
