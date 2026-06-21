@@ -19,10 +19,6 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
         </div>
 
         <div>{children}</div>
-        <div className={styles.modalActions}>
-          <button className={styles.cancelButton}>cancelar</button>
-          <button className={styles.saveButton}>Salvar</button>
-        </div>
       </div>
     </div>
   );

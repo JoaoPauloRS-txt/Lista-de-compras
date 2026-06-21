@@ -1,0 +1,20 @@
+.modalActions {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+  .saveButton,
+  .cancelButton {
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+  }
+  .saveButton {
+    background-color: var(--color-primary);
+    color: white;
+  }
+}

@@ -1,9 +1,8 @@
 import { FaSearch } from "react-icons/fa";
 import { Input } from "../Input/input";
-import { CreateProductButton } from "./create-product-button/create-product-button";
+import { CreateProductButton } from "../../features/product/create-product-button/create-product-button";
 import { useState } from "react";
-import { Modal } from "../modal/modal";
-import { CategorySelect } from "../category-select/category-select";
+import { CreateProductModal } from "../../features/product/create-product-modal/create-product-modal";
 
 export const Header = () => {
   const [isOpenCreateProductModal, setIsOpenCreateProductModal] =
@@ -11,12 +10,7 @@ export const Header = () => {
   function handleCreateProduct() {
     setIsOpenCreateProductModal(true);
   }
-  const categories = [
-    { id: 1, name: "Bebidas" },
-    { id: 2, name: "Laticínios" },
-    { id: 3, name: "Carnes" },
-    { id: 4, name: "Hortifruti" },
-  ];
+
   return (
     <>
       <header
@@ -31,21 +25,10 @@ export const Header = () => {
         <CreateProductButton onCreate={handleCreateProduct} />
       </header>
       {isOpenCreateProductModal && (
-        <Modal
-          title="Criar produto"
+        <CreateProductModal
           isOpen={isOpenCreateProductModal}
           onClose={() => setIsOpenCreateProductModal(false)}
-        >
-          <Input
-            placeholder="Digite o nome do produto"
-            label="Nome do produto"
-          />
-          <CategorySelect
-            onChange={() => {}}
-            options={categories}
-            label="Categoria"
-          />
-        </Modal>
+        />
       )}
     </>
   );
