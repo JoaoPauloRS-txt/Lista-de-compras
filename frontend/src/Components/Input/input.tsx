@@ -7,6 +7,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   cleanable?: boolean;
   onClear?: () => void;
   iconPosition?: "left" | "right";
+  errorMessage?: string;
 }
 export const Input = ({
   label,
@@ -15,10 +16,11 @@ export const Input = ({
   placeholder,
   cleanable,
   onClear,
+  errorMessage,
   ...rest
 }: InputProps) => {
   const showClearIcon = cleanable;
-  console.log(showClearIcon);
+
   return (
     <div className={styles.container}>
       {label && <label className={styles.label}>{label}</label>}
@@ -44,6 +46,10 @@ export const Input = ({
           {...rest}
         />
       </div>
+
+      {errorMessage && (
+        <span className={styles.errorMessage}>{errorMessage}</span>
+      )}
     </div>
   );
 };
