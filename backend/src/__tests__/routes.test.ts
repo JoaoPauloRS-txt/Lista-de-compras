@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach } from "vitest";
 import request from "supertest";
 import app from "../app.js";
 import { ProductModel } from "../models/Products.js";
+import { CategoryModel } from "../models/Category.js";
 
 describe("POST /products", () => {
   beforeEach(async () => {
@@ -11,10 +12,13 @@ describe("POST /products", () => {
   it("cria produto e retorna 201", async () => {
     const response = await request(app)
       .post("/products")
-      .send({ name: "ovos" })
+      .send({ name: "ovos", categoryId: "507f1f77bcf86cd799439011" })
       .expect(201);
 
-    expect(response.body).toMatchObject({ name: "ovos" });
+    expect(response.body).toMatchObject({
+      name: "ovos",
+      categoryId: "507f1f77bcf86cd799439011",
+    });
     expect(response.body._id).toBeDefined();
   });
 
@@ -22,7 +26,7 @@ describe("POST /products", () => {
     const response = await request(app).post("/products").send({}).expect(400);
 
     expect(response.body).toMatchObject({
-      error: "Name is required",
+      error: "Name and category ID are required",
     });
   });
 
@@ -32,7 +36,7 @@ describe("POST /products", () => {
       .send({ name: "" })
       .expect(400);
 
-    expect(response.body.error).toBe("Name is required");
+    expect(response.body.error).toBe("Name and category ID are required");
   });
 });
 
@@ -48,8 +52,14 @@ describe("GET /products", () => {
   });
 
   it("retorna os produtos cadastrados", async () => {
-    await ProductModel.create({ name: "leite" });
-    await ProductModel.create({ name: "pão" });
+    await ProductModel.create({
+      name: "leite",
+      categoryId: "507f1f77bcf86cd799439011",
+    });
+    await ProductModel.create({
+      name: "pão",
+      categoryId: "507f1f77bcf86cd799439011",
+    });
 
     const response = await request(app).get("/products").expect(200);
 
@@ -65,7 +75,10 @@ describe("DELETE /products/:productId", () => {
   });
 
   it("remove produto e retorna 204", async () => {
-    const { _id } = await ProductModel.create({ name: "açúcar" });
+    const { _id } = await ProductModel.create({
+      name: "açúcar",
+      categoryId: "507f1f77bcf86cd799439011",
+    });
 
     await request(app)
       .delete(`/products/${String(_id)}`)
@@ -79,5 +92,20 @@ describe("DELETE /products/:productId", () => {
     const idInexistente = "507f1f77bcf86cd799439011";
 
     await request(app).delete(`/products/${idInexistente}`).expect(204);
+  });
+});
+
+describe("GET /categories", () => {
+  beforeEach(async () => {
+    await CategoryModel.deleteMany({});
+  });
+  it("retorna categorias", async () => {
+    await CategoryModel.create({ name: "Bebidas" });
+    await CategoryModel.create({ name: "Laticínios" });
+
+    const response = await request(app).get("/categories").expect(200);
+
+    const names = response.body.map((c: { name: string }) => c.name).sort();
+    expect(names).toEqual(["Bebidas", "Laticínios"]);
   });
 });
