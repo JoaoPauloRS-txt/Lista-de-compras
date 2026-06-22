@@ -10,7 +10,7 @@ export interface GetProductListResponse {
     name: string;
   };
 }
-const GET_PRODUCT_LIST_KEY = "productList";
+export const GET_PRODUCT_LIST_KEY = "productList";
 
 const getProductList = () =>
   api

@@ -5,20 +5,20 @@ import { FaArrowAltCircleDown, FaArrowAltCircleUp } from "react-icons/fa";
 import { useGetCategories } from "./api/get-categories";
 import { Input } from "../../../Components/Input/input";
 
-interface DropdownProps {
+interface CategorySelectProps {
   label?: string;
-  value?: string | number;
-  onChange: (value: string | number) => void;
+  value?: string;
+  onChange: (value: string) => void;
   errorMessage?: string;
 }
 
 export function CategorySelect({
   label,
   onChange,
+  value,
   errorMessage,
-}: DropdownProps) {
+}: CategorySelectProps) {
   const [search, setSearch] = useState("");
-  const [selected, setSelected] = useState("");
   const [open, setOpen] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -47,21 +47,24 @@ export function CategorySelect({
   }, []);
 
   const handleClear = () => {
-    setSelected("");
     setSearch("");
     onChange("");
   };
+  const selectedCategory = categories?.find(
+    (category) => category._id === value
+  );
+
   return (
     <div ref={containerRef} className={styles.container}>
       {label && <label className={styles.label}>{label}</label>}
 
       <Input
-        value={search || selected}
+        value={search || selectedCategory?.name || ""}
         placeholder="Escolha uma categoria"
         onChange={(e) => setSearch(e.target.value)}
         onClick={() => setOpen((prev) => !prev)}
         iconPosition="right"
-        cleanable={!!selected}
+        cleanable={!!value}
         onClear={handleClear}
         icon={open ? <FaArrowAltCircleUp /> : <FaArrowAltCircleDown />}
       />
@@ -73,12 +76,11 @@ export function CategorySelect({
           <ul className={styles.list}>
             {filteredOptions?.map((option) => (
               <li
-                key={option.id}
+                key={option._id}
                 className={styles.option}
                 onClick={() => {
-                  onChange(option.name);
+                  onChange(option._id);
                   setOpen(false);
-                  setSelected(option.name);
                   setSearch("");
                 }}
               >

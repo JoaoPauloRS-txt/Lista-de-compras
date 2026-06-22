@@ -5,7 +5,7 @@ import { api } from "../../../../config/axios";
 const GET_CATEGORIES_KEY = "categories";
 
 interface GetCategoryListResponse {
-  id: string;
+  _id: string;
   name: string;
 }
 

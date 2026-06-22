@@ -9,6 +9,7 @@ import {
   CREATE_PRODUCT_SCHEMA,
   type CreateProductFormValues,
 } from "./constants";
+import { usePostCreateProduct } from "./api/post-create-product";
 
 interface CreateProductModalProps {
   isOpen: boolean;
@@ -19,6 +20,12 @@ export function CreateProductModal({
   isOpen: isOpenCreateProductModal,
   onClose,
 }: CreateProductModalProps) {
+  const { isPending, mutate: createProduct } = usePostCreateProduct({
+    onSuccess: () => {
+      onClose();
+    },
+  });
+
   const {
     control,
     handleSubmit,
@@ -31,7 +38,8 @@ export function CreateProductModal({
     },
   });
   const handleSubmitForm: SubmitHandler<CreateProductFormValues> = (data) => {
-    console.log("teste", data);
+    const { categoryId, productName } = data;
+    createProduct({ name: productName, categoryId: categoryId });
   };
 
   return (
@@ -57,20 +65,29 @@ export function CreateProductModal({
         <Controller
           control={control}
           name="categoryId"
-          render={({ field: { value, onChange } }) => (
-            <CategorySelect
-              value={value}
-              onChange={onChange}
-              label="Categoria"
-              errorMessage={errors.categoryId?.message}
-            />
-          )}
+          render={({ field }) => {
+            // console.log("categoryId do form:", value);
+            console.log("field value", field.value);
+
+            return (
+              <CategorySelect
+                value={field.value}
+                onChange={field.onChange}
+                label="Categoria"
+                errorMessage={errors.categoryId?.message}
+              />
+            );
+          }}
         />
         <div className={styles.modalActions}>
           <button onClick={onClose} className={styles.cancelButton}>
             cancelar
           </button>
-          <button className={styles.saveButton} type="submit">
+          <button
+            className={styles.saveButton}
+            type="submit"
+            disabled={isPending}
+          >
             Salvar
           </button>
         </div>
