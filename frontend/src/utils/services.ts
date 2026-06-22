@@ -17,3 +17,14 @@ export const handleResponseError = (errorDefaultMessage?: string) => {
     throw error;
   };
 };
+export const handleResponseSuccess = <T>(
+  response: T,
+  successMessage: string
+) => {
+  return () => {
+    if (successMessage) {
+      toast.success(successMessage);
+    }
+    return response;
+  };
+};
