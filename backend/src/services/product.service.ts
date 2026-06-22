@@ -6,8 +6,8 @@ export class ProductService {
       throw new Error("Name and category ID are required");
     }
 
-    const product = await ProductModel.create({ name, categoryId });
-    return product;
+    await ProductModel.create({ name, categoryId });
+    return;
   }
 
   async list() {
